@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>小黄帽的一天 · A Day in Guilin</title>
+<meta name="description" content="一个桂林小学生最普通、也最好的一天：赖床、米粉、挨揍、体育课、放学路、晚安。">
+<meta name="theme-color" content="#FBF8ED">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5 20a11 11 0 0 1 22 0z' fill='%23FFC93C' stroke='%2325214A' stroke-width='2.4' stroke-linejoin='round'/%3E%3Crect x='14' y='18.6' width='15' height='3.6' rx='1.8' fill='%23FFC93C' stroke='%2325214A' stroke-width='2.2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+<style>
+html,body{background:#FBF8ED;color:#25214A}
+:root{
+  --ink:#25214A;--bg:#FBF8ED;
+  --yellow:#FFC93C;--pink:#FF8DB5;--cobalt:#2E5BE6;--coral:#FF5A5F;--mint:#A9E6C6;--sky:#8DD3F6;--lilac:#D3BEFF;
+  --ease:cubic-bezier(.16,1,.3,1);--ease-back:cubic-bezier(.34,1.4,.5,1);
+  --gut:clamp(20px,5vw,72px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Noto Sans SC',system-ui,sans-serif;-webkit-font-smoothing:antialiased;background:var(--bg);color:var(--ink);overflow-x:hidden}
+::selection{background:var(--yellow);color:#25214A}
+a{color:inherit}
+:focus-visible{outline:2.5px solid var(--coral);outline-offset:4px;border-radius:6px}
+.muted{color:color-mix(in srgb,var(--ink) 68%,transparent)}
+.mono{font-family:'DM Mono',ui-monospace,monospace}
+
+/* ---------- nav ---------- */
+.nav{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:24px var(--gut)}
+.mark{display:inline-flex;align-items:center;gap:10px;font:400 24px/1 'ZCOOL KuaiLe',sans-serif;text-decoration:none}
+.mark svg{width:30px;height:30px}
+.nav .mono{font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:center;gap:clamp(20px,4vw,64px);padding:96px var(--gut) 64px}
+.eyebrow{display:block;font:500 11px/1 'DM Mono',monospace;letter-spacing:.24em;text-transform:uppercase;color:color-mix(in srgb,var(--ink) 62%,transparent)}
+h1{margin:22px 0 0;font:400 clamp(64px,8.6vw,146px)/.98 'ZCOOL KuaiLe',sans-serif;letter-spacing:-.01em}
+.sticker{color:var(--c,var(--yellow));-webkit-text-stroke:2.5px #25214A;paint-order:stroke fill;text-shadow:5px 5px 0 #25214A}
+.hero .sub{margin:28px 0 0;max-width:27em;font-size:clamp(16px,1.25vw,18px);line-height:1.85}
+.hero .en{margin:10px 0 0;font-size:14px;font-style:italic}
+.btn{display:inline-flex;align-items:center;gap:12px;margin-top:36px;padding:15px 24px 15px 28px;border-radius:999px;background:#25214A;color:#FBF8ED;font:500 15px/1 'Noto Sans SC',sans-serif;text-decoration:none;
+  box-shadow:4px 4px 0 var(--coral);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--coral)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--coral)}
+.btn svg{width:16px;height:16px}
+.deco{position:absolute;pointer-events:none;z-index:0;animation:float 7s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px) rotate(var(--r,4deg))}}
+
+/* ---------- stage (canvas frame) ---------- */
+.stage{margin:0;position:relative}
+.stage canvas,.stage video{display:block;width:100%;aspect-ratio:1/1;height:auto}
+.stage video{mix-blend-mode:darken}
+.stage figcaption{margin-top:-2.4%;text-align:center;font-size:12.5px;line-height:1.7}
+.stage figcaption b{font-weight:700;font-size:13.5px}
+.stage figcaption .en{font-size:12px;opacity:.75;margin-left:6px}
+.stage figcaption .mono{display:block;margin-top:2px;font-size:10.5px;letter-spacing:.14em;opacity:.55}
+.hero .stage{width:min(100%,640px);justify-self:center}
+
+/* ---------- chapters ---------- */
+.chapter{position:relative;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:center;gap:clamp(24px,5vw,88px);padding:clamp(56px,9vh,120px) var(--gut);min-height:100vh}
+.chapter.flip{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+.chapter.flip .text{order:2}
+.chapter .stage{width:min(100%,680px);justify-self:center}
+.time{margin:18px 0 0;font:400 clamp(84px,10.5vw,158px)/.9 'ZCOOL KuaiLe',sans-serif;letter-spacing:-.02em}
+h2{margin:22px 0 0;font:400 clamp(34px,3.4vw,50px)/1.1 'ZCOOL KuaiLe',sans-serif}
+h2 .en{display:block;margin-top:10px;font:italic 400 clamp(15px,1.15vw,17px)/1.3 'Noto Sans SC',sans-serif;color:color-mix(in srgb,var(--ink) 62%,transparent)}
+.diary{margin:20px 0 0;max-width:25em;font-size:clamp(16px,1.2vw,17.5px);line-height:1.9;text-wrap:pretty}
+.diary+.diary{margin-top:12px}
+.mood{display:inline-flex;align-items:center;gap:10px;margin-top:28px;padding:8px 16px 8px 8px;border-radius:999px;border:2px solid var(--ink);
+  background:color-mix(in srgb,var(--bg) 70%,#fff);box-shadow:3px 3px 0 var(--ink);font-size:14px;font-weight:500}
+.mood svg{width:28px;height:28px;flex:none}
+.mood .mono{font-size:10.5px;letter-spacing:.16em;opacity:.6;margin-left:4px}
+
+/* night */
+.night{--sh:#FF5A5F}
+.night .sticker{-webkit-text-stroke-color:#FBF8ED;text-shadow:5px 5px 0 var(--coral)}
+.night .stage video{mix-blend-mode:normal}
+
+/* ---------- outro ---------- */
+.outro{min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:96px var(--gut) 120px}
+.outro h2{font-size:clamp(56px,8vw,128px);margin-top:28px}
+.outro p{margin:22px 0 0;font-size:clamp(16px,1.4vw,19px);line-height:1.8}
+.outro .btn{background:#FBF8ED;color:#25214A;box-shadow:4px 4px 0 var(--yellow)}
+.outro .btn:hover{box-shadow:6px 6px 0 var(--yellow)}
+.outro .credit{margin-top:56px;font-size:10.5px;letter-spacing:.14em;line-height:2;opacity:.5}
+
+/* ---------- clock ---------- */
+.clock{position:fixed;left:max(18px,env(safe-area-inset-left));bottom:max(18px,env(safe-area-inset-bottom));z-index:40;display:flex;align-items:center;gap:12px;padding:7px 18px 7px 7px;border-radius:999px;
+  background:color-mix(in srgb,var(--bg) 82%,#fff);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);
+  opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.clock.on{opacity:1;transform:none}
+.clock svg{width:40px;height:40px}
+.clock b{display:block;font:500 17px/1 'DM Mono',monospace;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.clock span{display:block;margin-top:4px;font-size:11.5px;opacity:.65}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(24px);filter:blur(8px);transition:opacity 1s var(--ease),transform 1s var(--ease),filter 1s var(--ease);transition-delay:var(--d,0s)}
+.in .rv,.rv.in{opacity:1;transform:none;filter:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:1200px){.hero .eyebrow .en-only{display:none}}
+@media (max-width:900px){
+  .hero,.chapter,.chapter.flip{grid-template-columns:1fr;min-height:0}
+  .hero{padding-top:88px;gap:8px}
+  .hero .stage{width:min(100%,460px);margin-top:28px}
+  .hero .eyebrow .en-only{display:none}
+  .chapter .stage{order:-1;width:min(100%,520px)}
+  .chapter.flip .text{order:2}
+  .chapter{padding-top:56px;padding-bottom:40px;gap:4px}
+  .time{font-size:clamp(76px,22vw,108px)}
+  .nav .mono{display:none}
+  .clock{padding:5px 14px 5px 5px;gap:9px;left:auto;bottom:auto;right:max(12px,env(safe-area-inset-right));top:max(12px,env(safe-area-inset-top));transform:translateY(-12px)}
+  .clock svg{width:34px;height:34px}
+  .clock b{font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;filter:none;transition:none}
+  .deco{animation:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a class="mark" href="#top" aria-label="小黄帽的一天，回到开头">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 20a11 11 0 0 1 22 0z" fill="#FFC93C" stroke="#25214A" stroke-width="2.4" stroke-linejoin="round"/><rect x="14" y="18.6" width="15" height="3.6" rx="1.8" fill="#FFC93C" stroke="#25214A" stroke-width="2.2"/></svg>
+    小黄帽
+  </a>
+  <span class="mono muted">桂林 · Guilin · 25.27° N 110.29° E</span>
+</header>
+
+<main id="top">
+  <section class="hero" data-time="420" data-bg="#FBF8ED" data-ink="#25214A" data-label="天刚亮">
+    <svg class="deco" style="top:16%;left:44%;width:64px;--r:-6deg" viewBox="0 0 64 24" aria-hidden="true"><path d="M3 14c6-10 10-10 15 0s9 10 14 0 9-10 14 0 9 10 15 0" fill="none" stroke="#FF5A5F" stroke-width="4" stroke-linecap="round"/></svg>
+    <svg class="deco" style="bottom:12%;left:3%;width:44px;animation-delay:-2s" viewBox="0 0 44 40" aria-hidden="true"><path d="M22 4 40 36H4z" fill="#8DD3F6" stroke="#25214A" stroke-width="2.6" stroke-linejoin="round"/></svg>
+    <svg class="deco" style="top:13%;left:31%;width:46px;animation-delay:-4s" viewBox="0 0 46 46" aria-hidden="true"><g fill="#FFC93C" stroke="#25214A" stroke-width="1.6"><circle cx="7" cy="7" r="4"/><circle cx="23" cy="7" r="4"/><circle cx="39" cy="7" r="4"/><circle cx="7" cy="23" r="4"/><circle cx="23" cy="23" r="4"/><circle cx="39" cy="23" r="4"/><circle cx="7" cy="39" r="4"/><circle cx="23" cy="39" r="4"/><circle cx="39" cy="39" r="4"/></g></svg>
+
+    <div class="text in">
+      <span class="eyebrow rv" style="--d:.1s">桂林 · 九岁 · 秋天<span class="en-only"> &nbsp;/&nbsp; Guilin · age nine · autumn</span></span>
+      <h1 class="rv" style="--d:.22s"><span class="sticker">小黄帽</span><br>的一天</h1>
+      <p class="sub rv" style="--d:.4s">早上赖床，中午挨揍，下午跑八百米，傍晚抓蜻蜓。<br>一个桂林小学生最普通、也最好的一天。</p>
+      <p class="en muted rv" style="--d:.5s">One ordinary, perfect day of a nine-year-old in Guilin.</p>
+      <a class="btn rv" style="--d:.62s" href="#ch1">从 07:10 开始
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+    </div>
+    <figure class="stage">
+      <canvas data-scene="hero" data-still="6" role="img" aria-label="等距微缩模型：桂林的喀斯特山、漓江上的竹筏和鸬鹚、桂花小学、家，一个戴小黄帽的孩子在桥上挥手。"></canvas>
+      <figcaption><b>桂林 · 小黄帽的一天</b><span class="en">Guilin · A Day at Nine</span><br><span class="muted">秋 · 桂花开了，竹筏顺着漓江往下漂</span><span class="en">Autumn · osmanthus and a slow river</span><span class="mono">25.2736° N &nbsp; 110.2900° E</span></figcaption>
+    </figure>
+  </section>
+
+  <!-- 01 -->
+  <section class="chapter" id="ch1" data-time="430" data-bg="#FBF8ED" data-ink="#25214A" data-label="赖床">
+    <div class="text">
+      <span class="eyebrow rv">第 01 章 · Chapter 01</span>
+      <p class="time rv" style="--d:.08s"><span class="sticker" style="--c:var(--yellow)">07:10</span></p>
+      <h2 class="rv" style="--d:.18s">赖床<span class="en">Five more minutes</span></h2>
+      <p class="diary rv" style="--d:.3s">闹钟响到第三遍，楼下传来我妈的声音：“莫磨蹭咯，粉要坨了！” 我把头缩回被窝，再躺一分钟，就一分钟。</p>
+      <p class="diary rv" style="--d:.38s">一碗二两的桂林米粉，多放酸豆角，汤喝到见底。抹抹嘴，抓起书包就往外冲。</p>
+      <span class="mood rv" style="--d:.48s"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12" fill="#FFC93C" stroke="#25214A" stroke-width="2"/><path d="M8 12q2 2 4 0M16 12q2 2 4 0" fill="none" stroke="#25214A" stroke-width="1.8" stroke-linecap="round"/><ellipse cx="14" cy="19" rx="2" ry="2.4" fill="#25214A"/></svg>心情 · 困<span class="mono">SLEEPY</span></span>
+    </div>
+    <figure class="stage">
+      <canvas data-scene="wake" data-still="2.5" role="img" aria-label="等距微缩模型：卧室里闹钟在响，孩子还缩在被窝里，妈妈在门口叉腰催；旁边的米粉店冒着热气。"></canvas>
+      <figcaption><b>桂林 · 赖床</b><span class="en">Guilin · Five More Minutes</span><br><span class="muted">秋 · 07:10 · 闹钟响了第三遍</span><span class="en">Autumn · the third alarm</span><span class="mono">25.2753° N &nbsp; 110.2917° E</span></figcaption>
+    </figure>
+  </section>
+
+  <!-- 02 -->
+  <section class="chapter flip" id="ch2" data-time="620" data-bg="#F6F5EF" data-ink="#25214A" data-label="第三节课">
+    <div class="text">
+      <span class="eyebrow rv">第 02 章 · Chapter 02</span>
+      <p class="time rv" style="--d:.08s"><span class="sticker" style="--c:var(--sky)">10:20</span></p>
+      <h2 class="rv" style="--d:.18s">第三节课<span class="en">I'd rather be the sparrow</span></h2>
+      <p class="diary rv" style="--d:.3s">数学课，老师在黑板上写分数。窗外一只麻雀在晾衣杆上跳来跳去，我看得比黑板认真。</p>
+      <p class="diary rv" style="--d:.38s">同桌偷偷传来一张纸条：“放学抓蜻蜓去？” 我回了个“好”。可昨天的听写只有 62 分，卷子还在书包里，回家要怎么说呢。</p>
+      <span class="mood rv" style="--d:.48s"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12" fill="#8DD3F6" stroke="#25214A" stroke-width="2"/><circle cx="10" cy="12" r="1.6" fill="#25214A"/><circle cx="18" cy="12" r="1.6" fill="#25214A"/><path d="M9.5 20q4.5-3.5 9 0" fill="none" stroke="#25214A" stroke-width="1.8" stroke-linecap="round"/><path d="M7 7l4 2M21 7l-4 2" stroke="#25214A" stroke-width="1.6" stroke-linecap="round"/></svg>心情 · 烦<span class="mono">WORRIED</span></span>
+    </div>
+    <figure class="stage">
+      <canvas data-scene="class" data-still="2" role="img" aria-label="等距微缩模型：教室里老师指着黑板上的分数题，墙上贴着好好学习天天向上；窗边的孩子望着晾衣杆上的麻雀，头顶的想法泡泡里是 62 分和一朵小雨云。"></canvas>
+      <figcaption><b>桂林 · 第三节课</b><span class="en">Guilin · Third Period</span><br><span class="muted">秋 · 10:20 · 一张纸条传过来</span><span class="en">Autumn · a note across the aisle</span><span class="mono">25.2789° N &nbsp; 110.2881° E</span></figcaption>
+    </figure>
+  </section>
+
+  <!-- 03 -->
+  <section class="chapter" id="ch3" data-time="730" data-bg="#FFF4DA" data-ink="#25214A" data-label="午饭，和一次挨打">
+    <div class="text">
+      <span class="eyebrow rv">第 03 章 · Chapter 03</span>
+      <p class="time rv" style="--d:.08s"><span class="sticker" style="--c:var(--coral)">12:10</span></p>
+      <h2 class="rv" style="--d:.18s">午饭，和一次挨打<span class="en">The vase, the feather duster, the watermelon</span></h2>
+      <p class="diary rv" style="--d:.3s">中午回家，我把扫把当金箍棒耍，一棍子把柜子上的花瓶扫到了地上。我爸抄起鸡毛掸子，满屋子追。</p>
+      <p class="diary rv" style="--d:.38s">哭完了，我妈切了半个西瓜。她没说话，把中间最甜的那一勺挖给了我。</p>
+      <span class="mood rv" style="--d:.48s"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12" fill="#FF8DB5" stroke="#25214A" stroke-width="2"/><path d="M8 11.5q2-1.6 4 0" fill="none" stroke="#25214A" stroke-width="1.8" stroke-linecap="round"/><circle cx="18" cy="12" r="1.6" fill="#25214A"/><path d="M9.5 18.5q4.5 3.5 9 0" fill="none" stroke="#25214A" stroke-width="1.8" stroke-linecap="round"/><path d="M9.5 15.5q-1 2.2.2 3" fill="#8DD3F6" stroke="#25214A" stroke-width="1"/></svg>心情 · 委屈，然后好了<span class="mono">OK NOW</span></span>
+    </div>
+    <figure class="stage">
+      <canvas data-scene="lunch" data-still="9.6" role="img" aria-label="等距微缩模型：客厅里孩子拿扫把乱耍，花瓶摔碎，爸爸拿着鸡毛掸子绕着饭桌追；后来妈妈端来西瓜，一家人围着桌子吃，冒出小爱心。"></canvas>
+      <figcaption><b>桂林 · 午饭</b><span class="en">Guilin · Lunch Break</span><br><span class="muted">秋 · 12:10 · 啪的一声</span><span class="en">Autumn · one loud crack</span><span class="mono">25.2761° N &nbsp; 110.2934° E</span></figcaption>
+    </figure>
+  </section>
+
+  <!-- 04 -->
+  <section class="chapter flip" id="ch4" data-time="870" data-bg="#EFF6E8" data-ink="#25214A" data-label="体育课">
+    <div class="text">
+      <span class="eyebrow rv">第 04 章 · Chapter 04</span>
+      <p class="time rv" style="--d:.08s"><span class="sticker" style="--c:var(--mint)">14:30</span></p>
+      <h2 class="rv" style="--d:.18s">体育课<span class="en">Run it off</span></h2>
+      <p class="diary rv" style="--d:.3s">下午第一节是体育课。八百米跑下来，满头大汗，62 分好像也没那么可怕了。</p>
+      <p class="diary rv" style="--d:.38s">另一半烦恼，等跳完绳、踢完球再说。反正，还有一整个下午。</p>
+      <span class="mood rv" style="--d:.48s"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12" fill="#A9E6C6" stroke="#25214A" stroke-width="2"/><circle cx="10" cy="12" r="1.6" fill="#25214A"/><circle cx="18" cy="12" r="1.6" fill="#25214A"/><path d="M10 18h8" stroke="#25214A" stroke-width="1.8" stroke-linecap="round"/><path d="M21 5q2 3 0 4.5q-2-1.5 0-4.5z" fill="#8DD3F6" stroke="#25214A" stroke-width="1"/></svg>心情 · 好了一半<span class="mono">HALF BETTER</span></span>
+    </div>
+    <figure class="stage">
+      <canvas data-scene="pe" data-still="8" role="img" aria-label="等距微缩模型：操场红色跑道上一群孩子在跑八百米，主角头上的小乌云越跑越小；旁边有人跳绳、踢球，国旗在飘，桂花小学在后面。"></canvas>
+      <figcaption><b>桂林 · 体育课</b><span class="en">Guilin · PE Class</span><br><span class="muted">秋 · 14:30 · 八百米</span><span class="en">Autumn · eight hundred metres</span><span class="mono">25.2802° N &nbsp; 110.2870° E</span></figcaption>
+    </figure>
+  </section>
+
+  <!-- 05 -->
+  <section class="chapter" id="ch5" data-time="1000" data-bg="#FBF2E2" data-ink="#25214A" data-label="放学路">
+    <div class="text">
+      <span class="eyebrow rv">第 05 章 · Chapter 05</span>
+      <p class="time rv" style="--d:.08s"><span class="sticker" style="--c:var(--pink)">16:40</span></p>
+      <h2 class="rv" style="--d:.18s">放学路<span class="en">The way home</span></h2>
+      <p class="diary rv" style="--d:.3s">放学铃一响，小黄帽们涌出校门。米粉店门口排着队，玩具店的风车转个不停。</p>
+      <p class="diary rv" style="--d:.38s">兜里揣着五毛钱，买一串炸串，边走边吃。池塘边有人钓鱼，我们猫着腰抓蜻蜓，蚂蚱一下子蹦进了草里。</p>
+      <span class="mood rv" style="--d:.48s"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12" fill="#FFC93C" stroke="#25214A" stroke-width="2"/><path d="M8 12.5q2-2.4 4 0M16 12.5q2-2.4 4 0" fill="none" stroke="#25214A" stroke-width="1.8" stroke-linecap="round"/><path d="M9 17q5 5 10 0z" fill="#FF5A5F" stroke="#25214A" stroke-width="1.6" stroke-linejoin="round"/></svg>心情 · 馋，开心<span class="mono">HAPPY</span></span>
+    </div>
+    <figure class="stage">
+      <video src="way-home.mp4" poster="way-home-poster.jpg" muted playsinline loop preload="metadata" aria-label="短片《放学路》：桂林放学路上的等距微缩世界，米粉店、玩具店、池塘、抓蜻蜓的孩子。"></video>
+    </figure>
+  </section>
+
+  <!-- 06 -->
+  <section class="chapter flip night" id="ch6" data-time="1230" data-bg="#25214A" data-ink="#FBF8ED" data-label="作业，晚饭，晚安">
+    <div class="text">
+      <span class="eyebrow rv">第 06 章 · Chapter 06</span>
+      <p class="time rv" style="--d:.08s"><span class="sticker" style="--c:var(--yellow)">20:30</span></p>
+      <h2 class="rv" style="--d:.18s">作业，晚饭，晚安<span class="en">Homework, dinner, goodnight</span></h2>
+      <p class="diary rv" style="--d:.3s">台灯下写完最后一道题，把 62 分的卷子递给我妈签字。她看了一眼，说：“下次细心点哈。” 就这样。</p>
+      <p class="diary rv" style="--d:.38s">喝完一碗汤，洗完脚，钻进被窝。窗外的山黑黢黢的，月亮挂在山尖上。</p>
+      <span class="mood rv" style="--d:.48s"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12" fill="#D3BEFF" stroke="#25214A" stroke-width="2"/><path d="M8 13q2 2 4 0M16 13q2 2 4 0" fill="none" stroke="#25214A" stroke-width="1.8" stroke-linecap="round"/><path d="M10.5 18q3.5 2.6 7 0" fill="none" stroke="#25214A" stroke-width="1.8" stroke-linecap="round"/></svg>心情 · 满足<span class="mono">CONTENT</span></span>
+    </div>
+    <figure class="stage">
+      <canvas data-scene="night" data-still="5.5" role="img" aria-label="等距微缩模型：夜里，台灯下孩子在写作业，妈妈拿着 62 分的卷子来签字；隔壁房间的床上，孩子睡着了，窗外是喀斯特山和月亮，草地上有萤火虫。"></canvas>
+      <figcaption><b>桂林 · 晚安</b><span class="en">Guilin · Goodnight</span><br><span class="muted">秋 · 20:30 · 卷子签好了字</span><span class="en">Autumn · the test, signed</span><span class="mono">25.2753° N &nbsp; 110.2917° E</span></figcaption>
+    </figure>
+  </section>
+
+  <section class="outro night" data-time="1290" data-bg="#25214A" data-ink="#FBF8ED" data-label="睡着了">
+    <svg class="rv" width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><path d="M38 8a22 22 0 1 0 12 30A18 18 0 0 1 38 8z" fill="#FFC93C" stroke="#FBF8ED" stroke-width="2.4" stroke-linejoin="round"/></svg>
+    <h2 class="rv" style="--d:.12s"><span class="sticker" style="--c:#FBF8ED">晚安，桂林。</span></h2>
+    <p class="rv" style="--d:.24s">明天，闹钟还会响三遍。<br><span class="muted" style="font-size:.85em;font-style:italic">Tomorrow, the alarm will ring three times again.</span></p>
+    <a class="btn rv" style="--d:.36s" href="#top">再过一天
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4.4h4.4"/></svg></a>
+    <p class="credit mono rv" style="--d:.46s">每个场景都是代码实时画出来的 · 第 05 章短片《放学路 The Way Home》也是代码生成的</p>
+  </section>
+</main>
+
+<div class="clock" id="clock" aria-hidden="true">
+  <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="#FBF8ED" stroke="#25214A" stroke-width="2.4"/>
+    <g stroke="#25214A" stroke-width="1.6" stroke-linecap="round"><path d="M20 5.5v3M20 31.5v3M5.5 20h3M31.5 20h3"/></g>
+    <line id="hh" x1="20" y1="20" x2="20" y2="12" stroke="#25214A" stroke-width="3" stroke-linecap="round"/>
+    <line id="mh" x1="20" y1="20" x2="20" y2="7.5" stroke="#FF5A5F" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="20" cy="20" r="2.2" fill="#25214A"/></svg>
+  <div><b id="clockTime">07:00</b><span id="clockLabel">天刚亮</span></div>
+</div>
+
+<script src="scenes.js"></script>
+<script>
+(() => {
+  /* canvas scenes start once the CJK display font is ready */
+  const glyphs = '桂林米粉花小学好习天向上福莫磨蹭！要坨了抓蜻蜓？啪嘟—下次细心点哈。z★';
+  Promise.race([
+    Promise.all([document.fonts.load('16px "ZCOOL KuaiLe"', glyphs), document.fonts.load('15px "DM Mono"', '1/2+3=?5')]),
+    new Promise(r => setTimeout(r, 1800)),
+  ]).then(() => GuilinScenes.start());
+
+  /* reveal */
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .18 });
+  document.querySelectorAll('.chapter .text, .outro').forEach(el => io.observe(el));
+
+  /* video plays from the start whenever it comes into view */
+  const v = document.querySelector('#ch5 video');
+  new IntersectionObserver(([e]) => { if (e.isIntersecting) { if (!v.dataset.seen) { v.currentTime = 0; v.dataset.seen = 1; } v.play().catch(() => {}); } else v.pause(); }, { threshold: .35 }).observe(v);
+
+  /* scroll = clock; page colour follows the time of day */
+  const A = [...document.querySelectorAll('[data-time]')].map(el => ({ el, time: +el.dataset.time, bg: el.dataset.bg, ink: el.dataset.ink, label: el.dataset.label }));
+  const rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const mixc = (a, b, t) => { const x = rgb(a), y = rgb(b); return `rgb(${x.map((v, i) => Math.round(v + (y[i] - v) * t)).join(',')})`; };
+  const ss = (a, b, v) => { const x = Math.min(1, Math.max(0, (v - a) / (b - a))); return x * x * (3 - 2 * x); };
+  const clock = document.getElementById('clock'), hh = document.getElementById('hh'), mh = document.getElementById('mh'), ct = document.getElementById('clockTime'), cl = document.getElementById('clockLabel');
+  const root = document.documentElement, meta = document.querySelector('meta[name=theme-color]');
+  let centers = [];
+  const measure = () => { centers = A.map(a => a.el.offsetTop + a.el.offsetHeight / 2); };
+  function update() {
+    const mid = scrollY + innerHeight / 2;
+    let i = 0; while (i < A.length - 2 && mid > centers[i + 1]) i++;
+    const f = Math.min(1, Math.max(0, (mid - centers[i]) / (centers[i + 1] - centers[i]))), g = ss(.3, .7, f);
+    const a = A[i], b = A[i + 1], min = a.time + (b.time - a.time) * f;
+    const bg = mixc(a.bg, b.bg, g), ink = mixc(a.ink, b.ink, g);
+    root.style.setProperty('--bg', bg); root.style.setProperty('--ink', ink); document.body.style.background = bg; meta.content = bg;
+    const H = Math.floor(min / 60), M = Math.floor(min % 60);
+    ct.textContent = String(H).padStart(2, '0') + ':' + String(M).padStart(2, '0');
+    cl.textContent = f < .5 ? a.label : b.label;
+    hh.setAttribute('transform', `rotate(${(H % 12) * 30 + M * .5} 20 20)`); mh.setAttribute('transform', `rotate(${M * 6} 20 20)`);
+    clock.classList.toggle('on', scrollY > innerHeight * .35);
+  }
+  addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', () => { measure(); update(); });
+  addEventListener('load', () => { measure(); update(); });
+  measure(); update();
+})();
+</script>
+</body>
+</html>
